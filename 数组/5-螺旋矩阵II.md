@@ -136,9 +136,56 @@ class Solution {
 
 ### 思路
 
+本题的矩阵为m x n的矩阵，因此**行与列的情况可能不同**。
 
+按题意**从外向里顺时针逐层遍历**打印矩阵。
 
+循环次数为行与列之间较小的那个值决定。
 
+遍历时由于行列情况不同，循环不变量不好定义，于是直接遍历**每行每列所有元素**。
+
+若**某一层只有一行或一列元素**，如`startX != m-startX-1`或`startY != n-startY-1`，则不进行相应的循环。
+
+```java
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> result = new ArrayList<Integer>();
+        // 根据矩阵得到行列数
+        int m = matrix.length, n = matrix[0].length;
+        // 定义循环次数
+        int loop = (Math.min(m, n) + 1) / 2;
+        // 定义每圈循环起始位置
+        int startX = 0, startY = 0;
+
+        // 遍历矩阵
+        while (loop > 0) {
+            // 遍历该圈从左到右所有元素
+            for (int i=startY; i<n-startY; i++) {
+                result.add(matrix[startX][i]);
+            }
+            // 遍历该圈从上到下所有元素
+            for (int i=startX+1; i<m-startX; i++) {
+                result.add(matrix[i][n-startY-1]);
+            }
+            // 遍历该圈从右到左所有元素，若该圈只有一行元素，则第一个循环已经打印过了，则不进行该循环
+            for (int i=n-startY-2; i>=startY && (startX != m-startX-1); i--) {
+                result.add(matrix[m-startX-1][i]);
+            }
+            // 遍历该圈从下到上所有元素，若该圈只有一列元素，则第二个循环已经打印过了，则不进行该循环
+            for (int i=m-startX-2; i>startX && (startY != n-startY-1); i--) {
+                result.add(matrix[i][startY]);
+            }
+
+            // 更新下一圈起始位置和循环次数
+            startX++;
+            startY++;
+            loop--;
+        }
+
+        return result;
+    }
+}
+```
 
 
 
