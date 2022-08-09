@@ -73,6 +73,8 @@ console.log(`My name is ${name} and I am ${age}`);
   - 变大/小写：s.toUpperCase() / s.toLowerCase()
   - 子字符串：s.substring(0, 5)
   - 分割到数组：s.split(',')
+  - 获取指定值的索引：s.indexOf('.')
+  - 提取某个字符串的一部分: s.slice(BeginIndex[, endIndex])
 
 
 
@@ -116,6 +118,8 @@ JS中同一个数组**可以保存不同类型值**。
 
 ### 创建数组
 
+#### 直接声明创建
+
 ```javascript
 // 数组结构体创建方式
 const numbers = new Array(1,2,3,4,5);
@@ -123,6 +127,11 @@ const numbers = new Array(1,2,3,4,5);
 // 变量创建方式
 const fruits = ['apples', 'oranges', 'pears', 10, true];
 ```
+
+#### 数组方法创建
+
+- **Array.fill(value[, start[, end]]):** 用一个**固定值**填充一个数组中从起始索引到终止索引内的**全部元素**。
+- **Array.from(arrayLike[, mapFn]) :** 对一个**类似数组或可迭代对象**创建一个新的、浅拷贝的数组实例。如`Array.from([1, 2, 3], x => x + x));`
 
 ### 数组元素操作
 
@@ -141,6 +150,8 @@ const fruits = ['apples', 'oranges', 'pears', 10, true];
 **判断是否为数组**：`Array.isArray(fruits)`。
 
 **获取某个元素的索引：**`fruits.indexOf`。
+
+**将数组元素连接成一个字符串：**`Array.join('')`
 
 > const类型的数组可以在数组中添加元素，可以操作它，也可以使用方法，**唯一不能做的是初始化为空**（`fruits = []`）
 
