@@ -147,15 +147,25 @@ const fruits = ['apples', 'oranges', 'pears', 10, true];
 
 **删除元素：**可以通过pop方法在末尾删除，`fruits.pop()`。
 
-**判断是否为数组**：`Array.isArray(fruits)`。
-
 **获取某个元素的索引：**`fruits.indexOf`。
 
 **将数组元素连接成一个字符串：**`Array.join('')`
 
-
+**删除或替换现有元素或者原地添加新的元素**：`Array.splice(start[, deleteCount[, item1[, ...]]])`
 
 > const类型的数组可以在数组中添加元素，可以操作它，也可以使用方法，**唯一不能做的是初始化为空**（`fruits = []`）
+
+### 数组操作
+
+**判断是否为数组**：`Array.isArray(fruits)`。
+
+**获取数组的子串：**`Array.slice([begin[, end]])` 。
+
+>  `slice()` 返回一个**新的数组对象**，这一对象是一个由 `begin` 和 `end` 决定的原数组的**浅拷贝**（包括 `begin`，不包括`end`）不改变原数组。
+
+**数组排序：**`Array.sort([compareFunction])` 。
+
+> `sort()` 默认将数组元素转换为字符串比较，可以通过比较函数来定义排序，如 **`sort((a, b) => { return a-b; })` 数组将会比较数字并升序排列**。
 
 
 
