@@ -12,7 +12,19 @@
 
 ### 题解
 
+本题考察 **正则表达式**。
 
+分析URL的结构：
+
+1. 首先以HTTP(S)协议开头，注意URL可以不包含该协议信息。 `/^(https?:\/\/)?/`
+2. 主机域名部分可以是任意字母或数字，包含“-”或不包含“-”。 `(([A-Za-z0-9]+-[A-Za-z0-9]+|[A-Za-z0-9]+)\.)+`
+3. 顶级域名com cn等为2-6位字母。`([A-Za-z]{2,6})+`
+4. 端口号为数字，可选项。 `(:\d+)?`
+5. 请求路径如/login之类的，任意字符，可选项。 `(\/.*)?`
+6. 问号传参和哈希值如?age=1，可选项。 `(\?.*)?` `(#.*)?`
+7. 最后结束符。 `$`
+
+最后用 `RegExp` 的 `test` 方法测试是否匹配。
 
 ```html
 <!DOCTYPE html>
@@ -23,25 +35,9 @@
     <body>
     	
         <script type="text/javascript">
-            const _quickSort = array => {
+            const _isUrl = url => {
                 // 补全代码
-                // 定义返回条件 如果数组的长度小于1 那么就返回就行了
-                if (array.length <= 1) return array;
-                // 先将找到数组的中间位置的下标
-                var pivotIndex = Math.floor(array.length / 2);
-                // 在元素数组中删除这个元素。 并保存这个数
-                var pivot = array.splice(pivotIndex, 1)[0];
-                var left = [];
-                var right = [];
-                // 比数组中间位置元素小的放在left,数组中间位置元素大的放在right
-                for (var i=0; i<array.length; i++) {
-                    if (array[i] < pivot) {
-                        left.push(array[i]);
-                    } else {
-                        right.push(array[i]);
-                    }
-                }
-                return _quickSort(left).concat([pivot], _quickSort(right));
+                return /^(https?:\/\/)?(([A-Za-z0-9]+-[A-Za-z0-9]+|[A-Za-z0-9]+)\.)+([A-Za-z]{2,6})+(:\d+)?(\/.*)?(\?.*)?(#.*)?$/.test(url);
             }
         </script>
     </body>

@@ -20,11 +20,12 @@
 
 ### 题解
 
-根据题目要求，通过快速排序实现数组参数中数字从小到大排序。快速排序的基本思想是通过分治来使一部分均比另一部分小（大）再使两部分重复该步骤而实现有序的排列。核心步骤有：
+本题使用**递归**思路。
 
-1. 选择一个基准值（pivot）
-2. 以基准值将数组分割为两部分
-3. 递归分割之后的数组直到数组为空或只有一个元素为止
+‘abc’的全排列等于 ('a'拼接上'bc'的全排列数组中的每一项) + ('b'拼接上'ac'的全排列数组的每一项) + ('c'拼接上'ab'的全排列数组的每一项)。
+
+1. 当字符串长度为1的时候，返回自身，作为递归结束的条件。
+2. 当字符串长度大于1时，循环遍历字符串的每一个字符，获取剩余字符串作为新的递归字符串。
 
 ```html
 <!DOCTYPE html>
@@ -35,25 +36,22 @@
     <body>
     	
         <script type="text/javascript">
-            const _quickSort = array => {
+            const _permute = string => {
                 // 补全代码
-                // 定义返回条件 如果数组的长度小于1 那么就返回就行了
-                if (array.length <= 1) return array;
-                // 先将找到数组的中间位置的下标
-                var pivotIndex = Math.floor(array.length / 2);
-                // 在元素数组中删除这个元素。 并保存这个数
-                var pivot = array.splice(pivotIndex, 1)[0];
-                var left = [];
-                var right = [];
-                // 比数组中间位置元素小的放在left,数组中间位置元素大的放在right
-                for (var i=0; i<array.length; i++) {
-                    if (array[i] < pivot) {
-                        left.push(array[i]);
-                    } else {
-                        right.push(array[i]);
+                let res = []
+                if (string.length === 1) {
+                    res.push(string)
+                    return res
+                } else {
+                    for (let i=0; i<string.length; i++) {
+                        let x = string[i]
+                        let restStr = string.slice(0,i) + string.slice(i+1,string.length)
+                        _permute(restStr).forEach( item => {
+                            res.push(x + item)
+                        })
                     }
                 }
-                return _quickSort(left).concat([pivot], _quickSort(right));
+                return res
             }
         </script>
     </body>
