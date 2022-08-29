@@ -461,6 +461,57 @@ class Person {
 }
 ```
 
+> ES6中的`class`可以看作一个语法糖，它的绝大部分的功能，ES5都可以做到，新的`class`写法让原型的写法更加的清晰、更像面向对象编程的语法。
+
+
+
+## 原型和继承
+
+原型链和原型对象是js的核心，js以**原型链**的形式，<u>保证函数或对象中的方法、属性可以让向下传递</u>，使用了**构造函数**来实现继承机制。按照面向对象的说法，这就是继承，而js通过原型链才得以实现函数或对象的继承。
+
+- 每一个`构造函数`都有一个`原型属性prototype`指向他的`原型对象`；
+- 每一个`原型对象`中都有一个`constructor属性`指向他的`构造函数`；
+- 每一个`实例`（除了null）都有一个属性叫`__proto__`指向`原型对象`；
+- 写在`构造函数内的属性和方法只有构造函数本身可以调用`，原型对象与实例都不可以调用；
+- 写在原型对象的属性和方法称为实例属性和实例方法，既可以`通过实例调用`，也可以`通过原型对象调用`；
+- `构造函数`可以创建`多个实例`，每个实例都有自己的属性和方法，实例也可以`继承原型对象中的属性和方法`；
+- 所有实例对象都会从它的原型上继承一个 `constructor` ，指向原型对象
+
+#### 相关Object 和 Function
+
+**`Object.__proto__`、`Object.prototype`、`Object.prototype.__proto__`**
+
+- `Object`是构造函数，所有的函数都是通过`new Function`创建了，因此`Object`相当于`Function`的实例，即`Object.__proto__ --> Function.prototype`。
+- `Object.prototype`是`Object`构造函数的原型，处于**原型链的顶端**，`Object.prototype.__proto__`已经没有可以指向的上层原型，因此其值为`null`
+
+```javascript
+Object.__proto__ --> Function.prototype
+Object.prototype.__proto__ --> null
+```
+
+**`Function.__proto__`、`Function.prototype`、`Function.prototype.__proto__`**
+
+- `Function.prototype`是`Function`的原型，是所有函数实例的原型，例如上面讲的`Object.__proto__`
+- `Function.prototype`是一个普通对象，因此`Function.prototype.__proto__ --> Object.prototype`
+- `Function.__proto__`: `__proto__`指向创造它的构造函数的原型，`Function.__proto__ --> Function.prototype`
+
+> `Function`函数不通过任何东西创建，`JS`引擎启动时，添加到内存中
+>
+> `Funtion.__proto__ === Object.__proto__ `   	//`f() { [native code] }`
+
+**总结如下：**
+
+1. 所有函数(包括`Function`)的`__proto__`指向`Function.prototype`
+2. 自定义对象实例的`__proto__`指向构造函数的原型
+3. 函数的`prototype`的`__proto__`指向`Object.prototype`
+4. `Object.prototype.__proto__ --> null`
+
+#### 原型链
+
+实例对象在查找属性时，如果查找不到，就会沿着`__proto__`去与对象关联的原型上查找，如果还查找不到，就去找原型的原型，直至查到最顶层，这也就是原型链的概念。
+
+**所有的`原型对象`的`__proto__`属性都是指向`function Object`的`原型对象`。** 而`function Object`的`原型对象`在上图中我们可以得知是不存在`__proto__`这个属性的，它指向了`null`。**我们就得知了`原型链`的尽头是`null`。**
+
 
 
 ## DOM文档树结构
