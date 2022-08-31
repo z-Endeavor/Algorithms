@@ -8,13 +8,15 @@
 
 ### 题解
 
-本题考察**原型对象**。
+本题考察**this**。
 
-根据题目要求，实现一个仿Object.create功能的"_objectCreate"函数。该函数创建一个新对象，使用现有的对象来提供新创建的对象的proto，核心步骤有：
+该函数会临时修改内部this的指向并返回结果。
 
-1. 创建一个新函数
-1. 将传入的对象作为原型
-1. 返回新的对象
+Function里面的this指向的肯定是一个实例方法，call传入两个参数，第一个参数是一个对象（默认window），第二个参数是针对this这个实例方法的参数。
+
+1. 给传入的对象加上一个fn属性，这个属性指向this，也就是要调用的方法
+2. 然后再从这个对象里面调用fn这个方法，即可得到答案
+3. 删除填进去的属性
 
 ```html
 <!DOCTYPE html>
@@ -25,12 +27,13 @@
     <body>
     	
         <script type="text/javascript">
-            const _objectCreate = proto => {
-                // 补全代码
-                if (typeof proto !== 'object' || proto === null) return null;
-                const fn = function(){};
-                fn.prototype = proto;
-                return fn;
+            // 补全代码
+            Function.prototype._call = function(obj=window, ...args){
+                let fn = Symbol('obj')
+                obj.fn = this
+                let res = obj.fn(...args)
+                delete obj.fn
+                return res
             }
         </script>
     </body>
